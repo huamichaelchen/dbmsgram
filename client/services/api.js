@@ -4,6 +4,9 @@ angular.module('dbmsgram')
             getFeed: function() {
                 return $http.get('http://localhost:3000/api/v1/p');
             },
+            getHashtag: function(hashtag) {
+                return $http.get('http://localhost:3000/api/v1/explore/' + hashtag);
+            },
             getMediaById: function(id) {
                 return $http.get('http://instagram-server.herokuapp.com/api/media/' + id);
             },

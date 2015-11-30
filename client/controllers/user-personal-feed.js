@@ -1,5 +1,5 @@
 angular.module('dbmsgram')
-    .controller('UserCtrl', function($scope, $rootScope, $location, API) {
+    .controller('UserPersonalFeedCtrl', function($scope, $rootScope, $location, API) {
 
 /*
         $window.localStorage.currentUser = JSON.stringify(response.data.user);

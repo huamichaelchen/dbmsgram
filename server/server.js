@@ -93,7 +93,6 @@ app.get('/api/v1/p', function(req, res) {
 app.get('/api/v1/p/:photo_id', function(req, res) {
     var results = [];
     var photo_id = req.params.photo_id;
-    var data = {text: req.body.text, complete: req.body.complete};
 
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
@@ -113,45 +112,31 @@ app.get('/api/v1/p/:photo_id', function(req, res) {
     })
 });
 
-app.listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + app.get('port'));
+/* list photos with specific hashtag */
+app.get('/api/v1/explore/:hashtag', function(req, res) {
+    var results = [];
+    var hashtag = req.params.values;
+
+    console.log(req);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err });
+        }
+        var query = client.query("select photo_url from hashtag where hashtag=($1);", hashtag);
+        console.log(query);
+        query.on('row', function(row) {
+            results.push(row);
+        });
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
 });
 
 
-/* TODO:  Potential code to help authenticate user !!!!
-
-function createToken(user) {
-    var payload = {
-        exp: moment().add(14, 'days').unix(),
-        iat: moment().unix(),
-        sub: user._id
-    };
-
-    return jwt.encode(payload, config.tokenSecret);
-};
-
-function isAuthenticated(req, res, next) {
-    if (!(req.headers === req.headers.authorization)) {
-        return res.status(400).send({ message: 'You did not provide a JSON Web Token in the Authorization header.' });
-    }
-
-    var header = req.headers.authorization.split(' ');
-    var token = header[1];
-    var payload = jwt.decode(token, config.tokenSecret);
-    var now = moment().unix();
-
-    if (now >= payload.exp) {
-        return res.status(401).send({ message: 'Token has expired.' });
-    }
-
-    // Here, User is a Mongoose object...
-    User.findById(payload.sub, function(err, user) {
-        if (!user) {
-            return res.status(400).send({ message: 'User no longer exists.' });
-        }
-
-        req.user = user;
-        next();
-    })
-}
-*/
+app.listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + app.get('port'));
+});

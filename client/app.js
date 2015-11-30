@@ -17,12 +17,17 @@ angular.module('dbmsgram', ['ngRoute', 'ngMessages', 'satellizer'])
                 tempalteUrl: 'views/detail.html',
                 controller: 'DetailCtrl'
             })
-            .when('/user', {
-                templateUrl: 'views/user.html',
-                controller: 'UserCtrl'
+            .when('/userpersonalfeed', {
+                templateUrl: 'views/user-personal-feed.html',
+                controller: 'UserPersonalFeedCtrl'
+            })
+            .when('/explore/:hashtag', {
+                tempalteUrl: 'views/hashtag.html',
+                controller: 'HashtagCtrl'
             })
             .otherwise('/');
-/*
+
+/* TODO: instagram authentication
         $authProvider.loginUrl = 'http://localhost:3000/auth/login';
         $authProvider.signupUrl = 'http://localhost:3000/auth/signup';
         $authProvider.oauth2({
