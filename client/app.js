@@ -1,10 +1,15 @@
-angular.module('dbmsgram', ['ngRoute', 'ngMessages', 'satellizer'])
-    .config(function($routeProvider, $authProvider) {
+angular.module('dbmsgram', ['ngRoute', 'ngMessages', 'auth0', 'angular-storage',
+'angular-jwt', 'satellizer'])
+    .config(function($routeProvider, authProvider, $httpProvider, jwtInterceptorProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/home.html',
                 controller: 'HomeCtrl'
             })
+            /*.when('/login', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            })*/
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
@@ -25,7 +30,43 @@ angular.module('dbmsgram', ['ngRoute', 'ngMessages', 'satellizer'])
                 tempalteUrl: 'views/hashtag.html',
                 controller: 'HashtagCtrl'
             })
+            .when('/upload', {
+                templateUrl: 'views/upload.html',
+                controller: 'UploadCtrl'
+            })
             .otherwise('/');
+
+        authProvider.init({
+            domain: 'huamichaelchen.auth0.com',
+            clientID: 'SqmMynRgebyi0qVElcRg2mbDvZItfjD4'
+        });
+
+        // We're annotating this function so that the `store` is injected correctly when this file is minified
+        jwtInterceptorProvider.tokenGetter = ['store', function(store) {
+            // Return the saved token
+            return store.get('token');
+        }];
+
+        $httpProvider.interceptors.push('jwtInterceptor');
+    })
+    .run(function(auth, $rootScope, store, jwtHelper, $location) {
+        // This hooks al auth events to check everything as soon as the app starts
+        auth.hookEvents();
+
+        $rootScope.$on('$locationChangeStart', function() {
+            var token = store.get('token');
+            if (token) {
+                if (!jwtHelper.isTokenExpired(token)) {
+                    if (!auth.isAuthenticated) {
+                        auth.authenticate(store.get('profile'), token);
+                    }
+                } else {
+                    $location.path('/');
+                }
+            }
+        })
+    });
+
 
 /* TODO: instagram authentication
         $authProvider.loginUrl = 'http://localhost:3000/auth/login';
@@ -41,4 +82,3 @@ angular.module('dbmsgram', ['ngRoute', 'ngMessages', 'satellizer'])
             authorizationEndpoint: 'https://api.instagram.com/oauth/authorize'
         });
 */
-    });

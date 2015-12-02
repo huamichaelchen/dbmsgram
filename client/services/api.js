@@ -12,6 +12,9 @@ angular.module('dbmsgram')
             },
             likeMedia: function(id) {
                 return $http.post('http://instagram-server.herokuapp.com/api/like', { mediaId: id });
+            },
+            postPhoto: function() {
+                return $http.post('http://localhost:3000/api/v1/photo');
             }
         }
     });

@@ -7,6 +7,10 @@ var moment = require('moment');
 var pg = require('pg');
 var path = require('path');
 var request = require('request');
+var jwt = require('express-jwt');
+var multer = require('multer');
+var upload = multer({ dest: '../../client/images/'});
+
 
 var app = express();
 var connectionString = process.env.DATABASE_URL || 'postgres://mc:dbms-project-3753@localhost:5432/dbmsproject_hua_chen';
@@ -16,6 +20,43 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(multer({ dest: './client/images/',
+    rename: function (fieldname, filename) {
+        return filename+Date.now();
+    },
+    onFileUploadStart: function (file) {
+        console.log(file.originalname + ' is starting ...');
+    },
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path);
+
+        pg.connect(connectionString, function(err, client, done) {
+            if (err) {
+                done();
+                console.log(err);
+                return res.status(500).json({ success: false, data: err});
+            }
+
+            var i = Math.floor((Math.random() * 1000) + 1);
+            var query = client.query("insert into photo values($1, $2, $3, $4, $5)",
+                ['../../' + file.path, i, false, 1, 'huamichaelchen']);
+
+            query.on('end', function() {
+                done();
+            });
+        });
+    }
+}));
+
+app.post('/api/v1/photo', function(req, res) {
+    upload(req, res, function(err) {
+        if (err) {
+            return res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+});
 
 /*  sign in */
 app.get('/auth/login', function(req, res) {
