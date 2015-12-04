@@ -1,5 +1,5 @@
-huamichaelchen,"../../client/images/Cole_Thomas_The_Course_of_Empire_The_Arcadian_or_Pastoral_State_1836.jpg?dl=0","2015-11-19 23:23:11",false,false,true
-testuser,"../../client/images/Cole_Thomas_The_Course_of_Empire_The_Arcadian_or_Pastoral_State_1836.jpg?dl=0","2015-11-19 23:23:11",false,false,true
-anothertestuser,"../../client/images/Cole_Thomas_The_Course_of_Empire_The_Arcadian_or_Pastoral_State_1836.jpg?dl=0","2015-11-19 23:23:11",false,false,true
-thisisatestuser,"../../client/images/Cole_Thomas_The_Course_of_Empire_The_Arcadian_or_Pastoral_State_1836.jpg?dl=0","2015-11-19 23:23:11",false,false,true
-onemoretestuser,"../../client/images/Cole_Thomas_The_Course_of_Empire_The_Arcadian_or_Pastoral_State_1836.jpg?dl=0","2015-11-19 23:23:11",false,false,true
+huamichaelchen,"../../client/images/sample5.JPG","2015-11-19 23:23:11",false,false,true
+testuser,"../../client/images/sample1.JPG","2015-11-19 23:23:11",false,false,true
+anothertestuser,"../../client/images/sample7.JPG","2015-11-19 23:23:11",false,false,true
+thisisatestuser,"../../client/images/sample2.JPG","2015-11-19 23:23:11",false,false,true
+onemoretestuser,"../../client/images/sample3.JPG","2015-11-19 23:23:11",false,false,true
