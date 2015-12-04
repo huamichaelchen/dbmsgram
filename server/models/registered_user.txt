@@ -1,0 +1,5 @@
+huamichaelchen,awfulpassword.....,male,"random bio","1988-05-10","902-670-7144",michael,chen,false,null,null,1
+testuser,anotherawfulpassword..,female,"another random bio","1988-07-21",null,test,user1,false,null,null,2
+anothertestuser,raffweassword..,male,"another random bio","1988-01-21",null,test,user2,false,null,null,null
+thisisatestuser,anotherawfulp23432412assword..,male,"another random bio","1988-02-21",null,test,user3,false,null,null,null
+onemoretestuser,anothedasfwerawfulpassword..,female,"another random bio","1988-05-21",null,test,user4,false,null,null,null

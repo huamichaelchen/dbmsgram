@@ -1,0 +1,63 @@
+(1) E
+
+RegisteredUser(username, password, gender, bio, dob, phoneNumber, givenName, familyName, disabled)
+PK: username
+
+Photo(photoURL, softdeleteTag)
+PK: photoURL
+
+Comment(commentID, content)
+PK: commentID
+
+(2) WE
+
+Moderator(moderatorID, username)
+PK: moderatorID + username
+FK: RegisteredUser(username)
+
+(3) S ==== 1 R 1 ---- T
+
+(4) S ---- N R 1 ---- T
+
+Photo(photoURL, softdeleteTag, moderatorID, username)
+PK: photoURL
+FK: Moderator(moderatorID), RegisteredUser(username)
+
+Moderator(moderatorID, username, reasonPromoted, whenPromoted)
+PK: moderatorID + username
+FK: RegisteredUser(username)
+
+RegisteredUser(username, password, gender, bio, phoneNumber, givenName, familyName, disabled, reasonDisabled, whenDisabled, moderatorID)
+PK: username
+FK: Moderator(moderatorID)
+
+Comment(commentID, content, photoURL)
+PK: commentID
+FK: Photo(photoURL)
+
+(5) S ---- M R N ---- T
+
+UserLikedPhoto(username, photoURL, whenLiked)
+PK: username + photoURL
+FK: RegisteredUser(username), Photo(photoURL)
+
+UserReportedPhoto(username, photoURL, whenReported, stolen, spam, violation)
+PK: username + photoURL
+FK: RegisteredUser(username), Photo(photoURL)
+
+Follow(followerUsername, followingUsername)
+PK: followerUsername + followingUsername
+FK: RegisteredUser(username), RegisteredUser(username)
+
+(6) A+
+
+Email(email, username)
+PK: email + username
+
+HashTag(hashtag, photoURL)
+PK: hashtag + photoURL
+
+(7) n-ary
+Possess(username, photoURL, commentID, whenCommented, whenPhotoed)
+PK: username + photoURL + commentID)
+FK: RegisteredUser(username), Photo(photoURL), Comment(commentID)
