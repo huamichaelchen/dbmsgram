@@ -9,7 +9,7 @@ var path = require('path');
 var request = require('request');
 var jwt = require('express-jwt');
 var multer = require('multer');
-var upload = multer({ dest: '../../client/images/'});
+var upload = multer({ dest: './client/images/'});
 
 
 var app = express();
@@ -44,6 +44,7 @@ app.use(multer({ dest: './client/images/',
 
             query.on('end', function() {
                 done();
+
             });
         });
     }
@@ -54,7 +55,8 @@ app.post('/api/v1/photo', function(req, res) {
         if (err) {
             return res.end("Error uploading file.");
         }
-        res.end("File is uploaded");
+        //res.end("File is uploaded");
+        res.redirect('http://localhost:8000/client/#/userpersonalfeed')
     });
 });
 

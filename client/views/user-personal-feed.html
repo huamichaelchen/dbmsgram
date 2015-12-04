@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
         <div ng-repeat="photo in photos" class="col-lg-2 col-sm-3 col-xs-4">
-            <!--<a href="{photo}"> -->
+            <!--<a ng-href="{{photo.photo_id}}">-->
                 <img ng-src="{{photo.photo_url}}" class="thumbnail img-responsive">
-            <!--</a> -->
+            <!--</a>-->
         </div>
     </div>
 </div>
